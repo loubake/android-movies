@@ -1,6 +1,6 @@
 # android-movies
 
-This project is part of a personal study to consolidate the usage of some Android technologies.
+This is a work in progress project that's part of a personal study. The goal is to consolidate the usage of some Android technologies.
 
 ## The app
 
