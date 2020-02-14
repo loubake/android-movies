@@ -1,21 +1,25 @@
 package br.com.loubake.androidmovies.data
 
 import br.com.loubake.androidmovies.domain.Movie
+import br.com.loubake.androidmovies.domain.MoviesResponse
 
 class MovieService {
 
-    fun getMovies(): List<Movie> {
-        val moviesFakeApi = mutableListOf<MovieResponse>().apply {
-            add(MovieResponse("Movie 1", ""))
-            add(MovieResponse("Movie 2", ""))
-            add(MovieResponse("Movie 3", ""))
-            add(MovieResponse("Movie 4", ""))
-            add(MovieResponse("Movie 5", ""))
+    fun getMovies(): MoviesResponse {
+        val moviesFakeApi = mutableListOf<MoviesDTO>().apply {
+            add(MoviesDTO("Movie 1", ""))
+            add(MoviesDTO("Movie 2", ""))
+            add(MoviesDTO("Movie 3", ""))
+            add(MoviesDTO("Movie 4", ""))
+            add(MoviesDTO("Movie 5", ""))
         }
 
         val movies = mutableListOf<Movie>()
         moviesFakeApi.map { movies.add(Movie(it.title, it.posterUrl)) }
 
-        return movies
+        return MoviesResponse().apply {
+            status = MoviesResponse.Status.SUCCESS
+            listMovies = movies
+        }
     }
 }

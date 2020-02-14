@@ -6,10 +6,11 @@ import br.com.loubake.androidmovies.data.MovieService
 import br.com.loubake.androidmovies.data.MoviesRepositoryImpl
 import br.com.loubake.androidmovies.domain.GetMoviesUseCase
 import br.com.loubake.androidmovies.domain.Movie
+import br.com.loubake.androidmovies.domain.MoviesResponse
 
 class MoviesViewModel: ViewModel() {
     val moviesListLiveData = MutableLiveData<List<Movie>>()
-    val notifyRequestFinishedWithErrorLiveData = MutableLiveData<Unit>()
+    val notifyRequestFinishedLiveData = MutableLiveData<Unit>()
 
     private val moviesService = MovieService()
     private val moviesRepository = MoviesRepositoryImpl(moviesService)
@@ -18,6 +19,14 @@ class MoviesViewModel: ViewModel() {
     fun getMovies() {
         val result = getMoviesUseCase()
 
-        moviesListLiveData.postValue(result)
+        when (result.status) {
+            MoviesResponse.Status.SUCCESS -> {
+                notifyRequestFinishedLiveData.postValue(Unit)
+                moviesListLiveData.postValue(result.listMovies)
+            }
+            MoviesResponse.Status.ERROR_API -> {
+                notifyRequestFinishedLiveData.postValue(Unit)
+            }
+        }
     }
 }

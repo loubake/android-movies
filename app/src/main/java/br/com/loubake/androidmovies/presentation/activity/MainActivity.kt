@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
             }
         )
 
-        moviesViewModel.notifyRequestFinishedWithErrorLiveData.observe(
+        moviesViewModel.notifyRequestFinishedLiveData.observe(
             this,
             Observer {
                 moviesProgress.visibility = View.GONE
