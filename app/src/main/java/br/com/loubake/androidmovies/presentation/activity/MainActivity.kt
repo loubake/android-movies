@@ -33,6 +33,8 @@ class MainActivity : AppCompatActivity() {
         initRecyclerView()
 
         setupObservables()
+
+        moviesViewModel.getMovies()
     }
 
     private fun initViews() {
@@ -56,8 +58,10 @@ class MainActivity : AppCompatActivity() {
     private fun setupObservables() {
         moviesViewModel.moviesListLiveData.observe(
             this,
-            Observer {
+            Observer {moviesResponse ->
                 moviesProgress.visibility = View.GONE
+                moviesResponse.map { movie -> listMovies.add(movie) }
+                moviesRecyclerView.adapter?.notifyDataSetChanged()
             }
         )
 
