@@ -44,10 +44,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
-        listMovies.add(Movie("title1", null))
-        listMovies.add(Movie("title2", null))
-        listMovies.add(Movie("title3", null))
-
         moviesRecyclerView.layoutManager = GridLayoutManager(this,
             GRID_COLUMS
         )
