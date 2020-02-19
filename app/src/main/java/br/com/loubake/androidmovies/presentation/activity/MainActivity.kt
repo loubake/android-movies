@@ -1,9 +1,9 @@
 package br.com.loubake.androidmovies.presentation.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -44,17 +44,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
-        moviesRecyclerView.layoutManager = GridLayoutManager(this,
-            GRID_COLUMS
-        )
-        moviesRecyclerView.adapter =
-            MoviesAdapter(this, listMovies)
+        moviesRecyclerView.layoutManager = GridLayoutManager(this, GRID_COLUMS)
+        moviesRecyclerView.adapter = MoviesAdapter(this, listMovies)
     }
 
     private fun setupObservables() {
         moviesViewModel.moviesListLiveData.observe(
             this,
-            Observer {moviesResponse ->
+            Observer { moviesResponse ->
                 moviesProgress.visibility = View.GONE
                 moviesResponse.map { movie -> listMovies.add(movie) }
                 moviesRecyclerView.adapter?.notifyDataSetChanged()

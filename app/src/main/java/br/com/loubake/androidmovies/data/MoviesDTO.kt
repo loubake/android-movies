@@ -11,5 +11,13 @@ data class MovieDTO(
     @SerializedName("title")
     val title: String,
     @SerializedName("poster_path")
-    val posterUrl: String
-)
+    val posterPath: String
+) {
+    companion object {
+        const val POSTER_BASE_URL = "https://image.tmdb.org/t/p/w185"
+    }
+
+    fun getPosterUrl(): String {
+        return POSTER_BASE_URL + posterPath
+    }
+}

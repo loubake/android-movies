@@ -2,6 +2,9 @@
 <resources>
     <!--    Item Movie-->
     <dimen name="item_movie_card_elevation">8dp</dimen>
-    <dimen name="item_movie_title_padding">16dp</dimen>
+    <dimen name="item_movie_card_margin_horizontal">4dp</dimen>
+    <dimen name="item_movie_card_margin_vertical">8dp</dimen>
+    <dimen name="item_movie_title_padding_horizontal">8dp</dimen>
+    <dimen name="item_movie_title_padding_vertical">16dp</dimen>
     <dimen name="item_movie_title_text_size">14sp</dimen>
 </resources>

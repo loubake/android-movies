@@ -14,7 +14,7 @@ class MoviesRepositoryImpl(val service: MoviesService): MoviesRepository {
             moviesResponse.status = MoviesResponse.Status.SUCCESS
             val movies = mutableListOf<Movie>()
             response.body()?.results?.map {
-                movies.add(Movie(it.title, it.posterUrl))
+                movies.add(Movie(it.title, it.getPosterUrl()))
             }
             moviesResponse.listMovies = movies
         } else {
