@@ -5,13 +5,13 @@ import android.view.View
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.loubake.androidmovies.R
 import br.com.loubake.androidmovies.domain.Movie
 import br.com.loubake.androidmovies.presentation.adapter.MoviesAdapter
 import br.com.loubake.androidmovies.presentation.viewmodel.MoviesViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
     private val listMovies = mutableListOf<Movie>()
     private lateinit var moviesRecyclerView: RecyclerView
     private lateinit var moviesProgress: ProgressBar
-    private lateinit var moviesViewModel: MoviesViewModel
+    val moviesViewModel: MoviesViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +38,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        moviesViewModel = ViewModelProviders.of(this).get(MoviesViewModel::class.java)
         moviesRecyclerView = findViewById(R.id.main_recycler_movies)
         moviesProgress = findViewById(R.id.main_progress)
     }
