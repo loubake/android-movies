@@ -2,12 +2,11 @@ package br.com.loubake.androidmovies.di
 
 import br.com.loubake.androidmovies.data.MoviesRepositoryImpl
 import br.com.loubake.androidmovies.data.MoviesService
-import br.com.loubake.androidmovies.data.MoviesServiceImpl
 import br.com.loubake.androidmovies.domain.GetMoviesUseCase
 import br.com.loubake.androidmovies.domain.MoviesRepository
 import br.com.loubake.androidmovies.presentation.viewmodel.MoviesViewModel
-import org.koin.androidx.viewmodel.ext.koin.viewModel
-import org.koin.dsl.module.module
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -32,12 +31,22 @@ val moviesModule = module {
     }
 
     single {
-        MoviesServiceImpl(get<Retrofit>()) as MoviesService
+        createMoviesService(
+            get<Retrofit>()
+        )
     }
 
     single {
-        Retrofit.Builder().baseUrl(MoviesService.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+        createRetrofit()
     }
+}
+
+fun createRetrofit(): Retrofit {
+    return Retrofit.Builder().baseUrl(MoviesService.BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+}
+
+fun createMoviesService(retrofit: Retrofit): MoviesService {
+    return retrofit.create(MoviesService::class.java)
 }

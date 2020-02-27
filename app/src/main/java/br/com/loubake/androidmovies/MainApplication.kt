@@ -2,18 +2,19 @@ package br.com.loubake.androidmovies
 
 import android.app.Application
 import br.com.loubake.androidmovies.di.moviesModule
-import org.koin.android.ext.android.startKoin
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 
 class MainApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
 
-        startKoin(
-            this,
-            listOf(
-                moviesModule
-            )
-        )
+        startKoin {
+            androidContext(this@MainApplication)
+            androidLogger()
+            modules(moviesModule)
+        }
     }
 }
