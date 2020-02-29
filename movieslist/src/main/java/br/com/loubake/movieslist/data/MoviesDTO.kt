@@ -1,4 +1,4 @@
-package br.com.loubake.androidmovies.data
+package br.com.loubake.movieslist.data
 
 import com.google.gson.annotations.SerializedName
 

@@ -1,14 +1,14 @@
-package br.com.loubake.androidmovies.data
+package br.com.loubake.movieslist.data
 
-import br.com.loubake.androidmovies.domain.Movie
-import br.com.loubake.androidmovies.domain.MoviesRepository
-import br.com.loubake.androidmovies.domain.MoviesResponse
+import br.com.loubake.movieslist.domain.Movie
+import br.com.loubake.movieslist.domain.MoviesRepository
+import br.com.loubake.movieslist.domain.MoviesResponse
 
 class MoviesRepositoryImpl(val service: MoviesService): MoviesRepository {
 
-    override suspend fun getMoviesData() : MoviesResponse {
+    override suspend fun getMoviesData(apiKey: String) : MoviesResponse {
         val moviesResponse = MoviesResponse()
-        val response = service.getMovies()
+        val response = service.getMovies(apiKey)
 
         if (response.isSuccessful) {
             moviesResponse.status = MoviesResponse.Status.SUCCESS

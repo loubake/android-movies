@@ -2,27 +2,17 @@ package br.com.loubake.androidmovies.presentation.activity
 
 import android.os.Bundle
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import br.com.loubake.androidmovies.BuildConfig
 import br.com.loubake.androidmovies.R
-import br.com.loubake.androidmovies.domain.Movie
-import br.com.loubake.androidmovies.presentation.adapter.MoviesAdapter
-import br.com.loubake.androidmovies.presentation.viewmodel.MoviesViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import br.com.loubake.movieslist.presentation.fragment.MoviesListFragment
 
 class MainActivity : AppCompatActivity() {
 
-    companion object {
-        const val GRID_COLUMS = 2
-    }
-
-    private val listMovies = mutableListOf<Movie>()
-    private lateinit var moviesRecyclerView: RecyclerView
+    private lateinit var mainFrameLayout: FrameLayout
     private lateinit var moviesProgress: ProgressBar
-    val moviesViewModel: MoviesViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,38 +20,31 @@ class MainActivity : AppCompatActivity() {
 
         initViews()
 
-        initRecyclerView()
-
-        setupObservables()
-
-        moviesViewModel.getMovies()
+        addMoviesListFeature()
     }
 
     private fun initViews() {
-        moviesRecyclerView = findViewById(R.id.main_recycler_movies)
+        mainFrameLayout = findViewById(R.id.main_frame_layout)
         moviesProgress = findViewById(R.id.main_progress)
     }
 
-    private fun initRecyclerView() {
-        moviesRecyclerView.layoutManager = GridLayoutManager(this, GRID_COLUMS)
-        moviesRecyclerView.adapter = MoviesAdapter(this, listMovies)
+    private fun addMoviesListFeature() {
+        supportFragmentManager.beginTransaction()
+            .add(
+                R.id.main_frame_layout,
+                MoviesListFragment.newInstance(
+                    BuildConfig.THE_MOVIE_DB_API_KEY,
+                    { finishedLoadingSuccess() },
+                    { finishedLoadingError() }
+                ))
+            .commit()
     }
 
-    private fun setupObservables() {
-        moviesViewModel.moviesListLiveData.observe(
-            this,
-            Observer { moviesResponse ->
-                moviesProgress.visibility = View.GONE
-                moviesResponse.map { movie -> listMovies.add(movie) }
-                moviesRecyclerView.adapter?.notifyDataSetChanged()
-            }
-        )
+    private fun finishedLoadingSuccess() {
+        moviesProgress.visibility = View.GONE
+    }
 
-        moviesViewModel.notifyRequestFinishedLiveData.observe(
-            this,
-            Observer {
-                moviesProgress.visibility = View.GONE
-            }
-        )
+    private fun finishedLoadingError() {
+        moviesProgress.visibility = View.GONE
     }
 }

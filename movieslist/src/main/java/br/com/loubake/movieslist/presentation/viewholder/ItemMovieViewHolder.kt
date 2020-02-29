@@ -1,12 +1,12 @@
-package br.com.loubake.androidmovies.presentation.viewholder
+package br.com.loubake.movieslist.presentation.viewholder
 
 import android.content.Context
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import br.com.loubake.androidmovies.R
-import br.com.loubake.androidmovies.domain.Movie
+import br.com.loubake.movieslist.R
+import br.com.loubake.movieslist.domain.Movie
 import com.bumptech.glide.Glide
 
 class ItemMovieViewHolder(val context: Context, val view: View) : RecyclerView.ViewHolder(view) {

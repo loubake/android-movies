@@ -1,10 +1,10 @@
-package br.com.loubake.androidmovies.di
+package br.com.loubake.movieslist.di
 
-import br.com.loubake.androidmovies.data.MoviesRepositoryImpl
-import br.com.loubake.androidmovies.data.MoviesService
-import br.com.loubake.androidmovies.domain.GetMoviesUseCase
-import br.com.loubake.androidmovies.domain.MoviesRepository
-import br.com.loubake.androidmovies.presentation.viewmodel.MoviesViewModel
+import br.com.loubake.movieslist.data.MoviesRepositoryImpl
+import br.com.loubake.movieslist.data.MoviesService
+import br.com.loubake.movieslist.domain.GetMoviesUseCase
+import br.com.loubake.movieslist.domain.MoviesRepository
+import br.com.loubake.movieslist.presentation.viewmodel.MoviesViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
