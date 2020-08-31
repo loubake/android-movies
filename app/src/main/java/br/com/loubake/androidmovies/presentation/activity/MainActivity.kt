@@ -2,7 +2,9 @@ package br.com.loubake.androidmovies.presentation.activity
 
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -20,6 +22,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val listMovies = mutableListOf<Movie>()
+    private lateinit var errorLayout: LinearLayout
+    private lateinit var errorTextView: TextView
     private lateinit var moviesRecyclerView: RecyclerView
     private lateinit var moviesProgress: ProgressBar
     val moviesViewModel: MoviesViewModel by viewModel()
@@ -38,6 +42,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
+        errorLayout = findViewById(R.id.error_layout)
         moviesRecyclerView = findViewById(R.id.main_recycler_movies)
         moviesProgress = findViewById(R.id.main_progress)
     }
@@ -51,7 +56,6 @@ class MainActivity : AppCompatActivity() {
         moviesViewModel.moviesListLiveData.observe(
             this,
             Observer { moviesResponse ->
-                moviesProgress.visibility = View.GONE
                 moviesResponse.map { movie -> listMovies.add(movie) }
                 moviesRecyclerView.adapter?.notifyDataSetChanged()
             }
@@ -61,6 +65,14 @@ class MainActivity : AppCompatActivity() {
             this,
             Observer {
                 moviesProgress.visibility = View.GONE
+            }
+        )
+
+        moviesViewModel.errorLiveData.observe(
+            this,
+            Observer {
+                errorLayout.visibility = View.VISIBLE
+                errorTextView.text = getString(R.string.error_unexpected)
             }
         )
     }

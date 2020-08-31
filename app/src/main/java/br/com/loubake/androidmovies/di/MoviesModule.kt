@@ -1,7 +1,10 @@
 package br.com.loubake.androidmovies.di
 
+import android.content.Context
+import br.com.loubake.androidmovies.data.local.MoviesDao
 import br.com.loubake.androidmovies.data.MoviesRepositoryImpl
-import br.com.loubake.androidmovies.data.MoviesService
+import br.com.loubake.androidmovies.data.local.MoviesRoomDatabase
+import br.com.loubake.androidmovies.data.remote.MoviesService
 import br.com.loubake.androidmovies.domain.GetMoviesUseCase
 import br.com.loubake.androidmovies.domain.MoviesRepository
 import br.com.loubake.androidmovies.presentation.viewmodel.MoviesViewModel
@@ -26,7 +29,8 @@ val moviesModule = module {
 
     single {
         MoviesRepositoryImpl(
-            get<MoviesService>()
+            get<MoviesService>(),
+            get<MoviesDao>()
         ) as MoviesRepository
     }
 
@@ -39,6 +43,10 @@ val moviesModule = module {
     single {
         createRetrofit()
     }
+
+    single {
+        createMoviesDao(context = get())
+    }
 }
 
 fun createRetrofit(): Retrofit {
@@ -49,4 +57,8 @@ fun createRetrofit(): Retrofit {
 
 fun createMoviesService(retrofit: Retrofit): MoviesService {
     return retrofit.create(MoviesService::class.java)
+}
+
+fun createMoviesDao(context: Context): MoviesDao {
+    return MoviesRoomDatabase.getDatabase(context).moviesDao()
 }

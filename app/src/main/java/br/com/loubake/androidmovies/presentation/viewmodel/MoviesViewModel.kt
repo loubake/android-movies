@@ -2,11 +2,11 @@ package br.com.loubake.androidmovies.presentation.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import br.com.loubake.androidmovies.domain.GetMoviesUseCase
 import br.com.loubake.androidmovies.domain.Movie
 import br.com.loubake.androidmovies.domain.MoviesResponse
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import br.com.loubake.androidmovies.domain.ResponseStatus
 import kotlinx.coroutines.launch
 
 class MoviesViewModel(
@@ -14,20 +14,25 @@ class MoviesViewModel(
 ) : ViewModel() {
     val moviesListLiveData = MutableLiveData<List<Movie>>()
     val notifyRequestFinishedLiveData = MutableLiveData<Unit>()
+    val errorLiveData = MutableLiveData<Unit>()
 
     fun getMovies() {
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch {
             val result = useCaseGetMovies()
+            notifyRequestFinishedLiveData.postValue(Unit)
 
             when (result.status) {
-                MoviesResponse.Status.SUCCESS -> {
-                    notifyRequestFinishedLiveData.postValue(Unit)
+                ResponseStatus.SUCCESS -> {
                     moviesListLiveData.postValue(result.listMovies)
                 }
-                MoviesResponse.Status.ERROR_API -> {
-                    notifyRequestFinishedLiveData.postValue(Unit)
+                ResponseStatus.ERROR_API, ResponseStatus.ERROR_TIMEOUT -> {
+                    handleError(result)
                 }
             }
         }
+    }
+
+    fun handleError(moviesResponse: MoviesResponse) {
+        errorLiveData.postValue(Unit)
     }
 }

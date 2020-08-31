@@ -1,4 +1,4 @@
-package br.com.loubake.androidmovies.data
+package br.com.loubake.androidmovies.data.remote
 
 import br.com.loubake.androidmovies.BuildConfig
 import retrofit2.Response
