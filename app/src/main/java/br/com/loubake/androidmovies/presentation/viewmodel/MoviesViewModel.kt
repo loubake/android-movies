@@ -27,6 +27,11 @@ class MoviesViewModel(
                 MoviesResponse.Status.ERROR_API -> {
                     notifyRequestFinishedLiveData.postValue(Unit)
                 }
+
+                MoviesResponse.Status.ERROR_TIMEOUT -> {
+                    notifyRequestFinishedLiveData.postValue(Unit)
+                }
+                null -> notifyRequestFinishedLiveData.postValue(Unit)
             }
         }
     }
