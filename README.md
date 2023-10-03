@@ -31,3 +31,6 @@ Kotlin Coroutines for handling async operations.
 
 - Dagger and Hilt for dependency injection.
 - Kotlin Flow
+- Pagination
+- Jetpack Compose
+- Navigation Component
