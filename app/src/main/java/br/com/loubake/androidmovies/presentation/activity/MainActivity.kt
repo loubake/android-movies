@@ -1,5 +1,6 @@
 package br.com.loubake.androidmovies.presentation.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     private val listMovies = mutableListOf<Movie>()
     private lateinit var moviesRecyclerView: RecyclerView
     private lateinit var moviesProgress: ProgressBar
-    val moviesViewModel: MoviesViewModel by viewModel()
+    private val moviesViewModel: MoviesViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +45,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun initRecyclerView() {
         moviesRecyclerView.layoutManager = GridLayoutManager(this, GRID_COLUMS)
-        moviesRecyclerView.adapter = MoviesAdapter(this, listMovies)
+        moviesRecyclerView.adapter = MoviesAdapter(this, listMovies).apply {
+            this.movieClickListener = onMovieClick()
+        }
     }
 
     private fun setupObservables() {
@@ -63,5 +66,12 @@ class MainActivity : AppCompatActivity() {
                 moviesProgress.visibility = View.GONE
             }
         )
+    }
+
+    private fun onMovieClick() = { movieId: String ->
+        val intent = Intent(this, MovieDetailsActivity::class.java).apply {
+            this.putExtra(MovieDetailsActivity.EXTRA_MOVIE_ID, movieId)
+        }
+        startActivity(intent)
     }
 }

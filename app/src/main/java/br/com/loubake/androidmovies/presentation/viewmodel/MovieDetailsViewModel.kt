@@ -2,28 +2,27 @@ package br.com.loubake.androidmovies.presentation.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import br.com.loubake.androidmovies.domain.GetMoviesUseCase
+import br.com.loubake.androidmovies.domain.GetMovieDetailsUseCase
 import br.com.loubake.androidmovies.domain.Movie
-import br.com.loubake.androidmovies.domain.MoviesResponse
 import br.com.loubake.androidmovies.domain.ResponseStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MoviesViewModel(
-    val useCaseGetMovies: GetMoviesUseCase
-) : ViewModel() {
-    val moviesListLiveData = MutableLiveData<List<Movie>>()
+class MovieDetailsViewModel(
+    private val useCaseGetMovieDetails: GetMovieDetailsUseCase
+) :ViewModel() {
+    val movieLiveData = MutableLiveData<Movie>()
     val notifyRequestFinishedLiveData = MutableLiveData<Unit>()
 
-    fun getMovies() {
+    fun getMovieDetails(movieId: String) {
         CoroutineScope(Dispatchers.IO).launch {
-            val result = useCaseGetMovies()
+            val result = useCaseGetMovieDetails(movieId = movieId)
 
             when (result.status) {
                 ResponseStatus.SUCCESS -> {
                     notifyRequestFinishedLiveData.postValue(Unit)
-                    moviesListLiveData.postValue(result.listMovies)
+                    movieLiveData.postValue(result.movie)
                 }
                 else -> {
                     notifyRequestFinishedLiveData.postValue(Unit)

@@ -10,13 +10,21 @@ import br.com.loubake.androidmovies.presentation.viewholder.ItemMovieViewHolder
 
 class MoviesAdapter(val context: Context, val moviesList: List<Movie>): RecyclerView.Adapter<ItemMovieViewHolder>() {
 
+    var movieClickListener: ((movieId: String) -> Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemMovieViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.item_movie, null, false)
         return ItemMovieViewHolder(context, view)
     }
 
     override fun onBindViewHolder(holder: ItemMovieViewHolder, position: Int) {
-        holder.bind(moviesList[position])
+        val movie = moviesList[position]
+        holder.bind(movie)
+        holder.itemView.setOnClickListener {
+            movieClickListener?.let { clickListener ->
+                clickListener(movie.id)
+            }
+        }
     }
 
     override fun getItemCount(): Int {

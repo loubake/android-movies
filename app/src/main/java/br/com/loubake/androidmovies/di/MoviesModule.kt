@@ -2,8 +2,10 @@ package br.com.loubake.androidmovies.di
 
 import br.com.loubake.androidmovies.data.MoviesRepositoryImpl
 import br.com.loubake.androidmovies.data.MoviesService
+import br.com.loubake.androidmovies.domain.GetMovieDetailsUseCase
 import br.com.loubake.androidmovies.domain.GetMoviesUseCase
 import br.com.loubake.androidmovies.domain.MoviesRepository
+import br.com.loubake.androidmovies.presentation.viewmodel.MovieDetailsViewModel
 import br.com.loubake.androidmovies.presentation.viewmodel.MoviesViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -18,8 +20,20 @@ val moviesModule = module {
         )
     }
 
+    viewModel {
+        MovieDetailsViewModel(
+            get<GetMovieDetailsUseCase>()
+        )
+    }
+
     factory {
         GetMoviesUseCase(
+            get<MoviesRepository>()
+        )
+    }
+
+    factory {
+        GetMovieDetailsUseCase(
             get<MoviesRepository>()
         )
     }

@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--    Item Movie-->
+    <!-- Item Movie -->
     <dimen name="item_movie_card_elevation">8dp</dimen>
     <dimen name="item_movie_card_margin_horizontal">4dp</dimen>
     <dimen name="item_movie_card_margin_vertical">8dp</dimen>
     <dimen name="item_movie_title_padding_horizontal">8dp</dimen>
     <dimen name="item_movie_title_padding_vertical">16dp</dimen>
     <dimen name="item_movie_title_text_size">14sp</dimen>
+
+    <!-- Movie Details -->
+    <dimen name="movie_details_margin_vertical_between_views">16dp</dimen>
+    <dimen name="movie_details_margin_horizontal">16dp</dimen>
+    <dimen name="movie_details_title_text_size">20sp</dimen>
+    <dimen name="movie_details_description_text_size">14sp</dimen>
 </resources>
