@@ -19,8 +19,12 @@ class MovieDetailsActivity : AppCompatActivity() {
 
     private val movieDetailsViewModel: MovieDetailsViewModel by viewModel()
     private lateinit var currentMovie: Movie
-    private lateinit var movieImage: ImageView
+    private lateinit var movieBackdropImage: ImageView
+    private lateinit var moviePosterImage: ImageView
     private lateinit var movieTitle: TextView
+    private lateinit var movieReleaseDate: TextView
+    private lateinit var movieTagline: TextView
+    private lateinit var movieGenres: TextView
     private lateinit var movieDescription: TextView
     private lateinit var loadingProgress: ProgressBar
 
@@ -37,8 +41,12 @@ class MovieDetailsActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        movieImage = findViewById(R.id.movie_details_image)
+        movieBackdropImage = findViewById(R.id.movie_details_backdrop_image)
+        moviePosterImage = findViewById(R.id.movie_details_poster_image)
         movieTitle = findViewById(R.id.movie_details_title)
+        movieReleaseDate = findViewById(R.id.movie_details_release_date)
+        movieTagline = findViewById(R.id.movie_details_tagline)
+        movieGenres = findViewById(R.id.movie_details_genres)
         movieDescription = findViewById(R.id.movie_details_description)
         loadingProgress = findViewById(R.id.movie_details_progress)
     }
@@ -59,13 +67,30 @@ class MovieDetailsActivity : AppCompatActivity() {
     }
 
     private fun populateViews(movie: Movie) {
-        movie.backdropUrl?.let {
-            Glide.with(this)
-                .load(movie.backdropUrl)
-                .centerCrop()
-                .into(movieImage)
+        movie.backdropUrl?.let { backdropUrl ->
+            loadBackdropImage(backdropUrl)
         }
         movieTitle.text = movie.title
+        movieTagline.text = movie.tagline
+        movieReleaseDate.text = movie.releaseDate
+        movieGenres.text = movie.genres.toString()
+        movie.posterUrl?.let { posterUrl ->
+            loadPosterImage(posterUrl)
+        }
         movieDescription.text = movie.description
+    }
+
+    private fun loadBackdropImage(backdropImageUrl: String) {
+        Glide.with(this)
+            .load(backdropImageUrl)
+            .centerCrop()
+            .into(movieBackdropImage)
+    }
+
+    private fun loadPosterImage(posterImageUrl: String) {
+        Glide.with(this)
+            .load(posterImageUrl)
+            .centerCrop()
+            .into(moviePosterImage)
     }
 }

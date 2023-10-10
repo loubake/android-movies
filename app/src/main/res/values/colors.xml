@@ -12,5 +12,10 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="white">#FFF</color>
+
+    <!--    Item movie colors   -->
     <color name="item_movie_title_color">#666</color>
+
+    <!--    Movie Details colors   -->
+    <color name="movie_details_background_transparent_black">#E333</color>
 </resources>

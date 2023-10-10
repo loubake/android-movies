@@ -12,6 +12,12 @@ data class MovieDTO(
     val id: String,
     @SerializedName("title")
     val title: String,
+    @SerializedName("release_date")
+    val releaseDate: String,
+    @SerializedName("tagline")
+    val tagline: String,
+    @SerializedName("genres")
+    val genres: List<GenreDTO>?,
     @SerializedName("poster_path")
     val posterPath: String,
     @SerializedName("backdrop_path")
@@ -34,7 +40,30 @@ data class MovieDTO(
     fun getBackdropUrl(): String {
         return IMAGES_BASE_URL + BACKDROP_SIZE + backdropPath
     }
+
+    fun getGenresNames(): List<String>? {
+        return genres?.map { it.name }
+    }
+
+    fun getBackdropUrlsList(): List<String> {
+        return images.backdrops.mapNotNull {
+            IMAGES_BASE_URL + BACKDROP_SIZE + it.filePath
+        }
+    }
+
+    fun getPosterUrlsList(): List<String> {
+        return images.posters.mapNotNull {
+            it.filePath
+        }
+    }
 }
+
+data class GenreDTO(
+    @SerializedName("id")
+    val id: String,
+    @SerializedName("name")
+    val name: String,
+)
 
 data class MovieImagesListDTO(
     @SerializedName("backdrops")

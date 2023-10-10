@@ -20,9 +20,12 @@ class MoviesRepositoryImpl(val service: MoviesService): MoviesRepository {
                     Movie(
                         id = it.id,
                         title = it.title,
+                        description = it.overview,
+                        releaseDate = it.releaseDate,
+                        genres = it.getGenresNames(),
+                        tagline = it.tagline,
                         posterUrl = it.getPosterUrl(),
                         backdropUrl = it.getBackdropUrl(),
-                        description = it.overview,
                     )
                 )
             }
@@ -44,9 +47,14 @@ class MoviesRepositoryImpl(val service: MoviesService): MoviesRepository {
                 movieDetailsResponse.movie = Movie(
                     id = body.id,
                     title = body.title,
+                    description = body.overview,
+                    releaseDate = body.releaseDate,
+                    genres = body.getGenresNames(),
+                    tagline = body.tagline,
                     posterUrl = body.getPosterUrl(),
                     backdropUrl = body.getBackdropUrl(),
-                    description = body.overview,
+                    backdropImages = body.getBackdropUrlsList(),
+                    posterImages = body.getPosterUrlsList()
                 )
             }
         } else {
